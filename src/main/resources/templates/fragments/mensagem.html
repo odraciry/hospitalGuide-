@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<span th:if="${not #strings.isEmpty(mensagemErro)}" th:text="${mensagemErro}" style="color:red"></span>
+	<span th:if="${not #strings.isEmpty(mensagemSucesso)}" th:text="${mensagemSucesso}" style="color:green"></span>
+</body>
+</html>
