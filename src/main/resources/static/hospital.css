@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+#select{
+	padding: 10px;
+	background: #a8a8a8;
+	width:20%;
+}
+.row{
+	padding:10px;
+}

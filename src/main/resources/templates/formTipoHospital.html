@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="formTipoHospital.css">
+<link rel="stylesheet" href="padrao.css">
+</head>
+<body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<div id="container">
+		<div class="form">
+			<img src="img/10130.png">
+		</div>
+		<form class="form" id="cad" action="salvarHospital" method="post">
+			<input type="hidden" name="id" th:value="${hosp?.id}">
+			<h1>Cadastre o tipo de Hospital</h1>
+			<div>
+				<label>Nome:</label> <input type="text" name="nome"
+					th:value="${hosp?.nome}">
+			</div>
+			<div>
+				<label>Descrição:</label> <input type="text" name="descricao"
+					th:value="${hosp?.descricao}">
+			</div>
+			<div>
+				<label>Palavas chave:</label> <input type="text"
+					name="palavrasChave" th:value="${hosp?.palavrasChave}">
+			</div>
+			<div th:replace="fragments/mensagem"></div>
+			<button type="submit">Salvar</button>
+		</form>
+	</div>
+</body>
+</html>

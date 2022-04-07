@@ -1,0 +1,69 @@
+body {
+	background-image: linear-gradient(rgba(226, 226, 226, 0.808),
+		rgba(163, 203, 228, 0.363), rgba(163, 203, 228, 0.363));
+	background-repeat: no-repeat;
+}
+
+#container {
+	display: flex;
+	margin: auto;
+	font-family: BebasNeue-Regular, Arial, Helvetica, sans-serif;
+	background-image: none;
+	background-image: linear-gradient(to left, white, white, rgba(255, 255, 255, 0));
+}
+
+img {
+	width: 100%;
+	border-radius: 10%;
+}
+
+.form {
+	width: 50%;
+	background-image: linear-gradient(to bottom, rgba(226, 226, 226, 0.199),
+		white, rgba(255, 255, 255, 0.76));
+}
+
+.form h1 {
+	text-align: center;
+	color: rgb(66, 133, 192);
+}
+
+#cad {
+	font-size: 1.5rem;
+}
+
+#cad div {
+	margin: 20px 0px 20px 0px;
+	padding: 1px;
+}
+
+#cad input {
+	margin: auto;
+	display: block;
+	width: 80%;
+	height: 30px;
+	background-color: rgba(45, 126, 176, 0.171);
+	border: none;
+	border-radius:10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.253);
+	border-right: 1px solid rgba(0, 0, 0, 0.336);
+}
+
+#cad label {
+	padding-left: 10%;
+}
+
+#cad button {
+	margin-left: 75.6%;
+	height: 40px;
+	width: 100px;
+	cursor: pointer;
+	border: 0.5px solid rgba(0, 0, 0, 0.397);
+	border-radius: 10px;
+	background-color: rgba(45, 126, 176, 0.171);
+}
+
+#cad button:hover {
+	background-color: rgb(66, 133, 192);
+	border: none;
+}

@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+#pesquisa{
+	display: flex;
+	justify-content: space-between;
+}
+.input-field{
+	width:100%;
+}
+#pesquisa select{
+	width: 10%;
+	height: 65px;
+	background: none;
+	border:none;
+}

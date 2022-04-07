@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="padrao.css">
+<link rel="stylesheet" href="hospital.css">
+<script type="text/javascript">
+	function meu_callback(conteudo) {
+		if (!("erro" in conteudo)) {
+			//Atualiza os campos com os valores.
+			document.getElementById('rua').value = (conteudo.logradouro);
+			document.getElementById('bairro').value = (conteudo.bairro);
+			document.getElementById('cidade').value = (conteudo.localidade);
+			document.getElementById('uf').value = (conteudo.uf);
+			console.log(conteudo.bairro)
+		} //end if.
+		else {
+			//CEP não Encontrado.
+			limpa_formulário_cep();
+			alert("CEP não encontrado.");
+		}
+	}
+	function pesquisacep(valor) {
+
+		//Nova variável "cep" somente com dígitos.
+		var cep = valor.replace(/\D/g, '');
+
+		//Verifica se campo cep possui valor informado.
+		if (cep != "") {
+
+			//Expressão regular para validar o CEP.
+			var validacep = /^[0-9]{8}$/;
+
+			//Valida o formato do CEP.
+			if (validacep.test(cep)) {
+
+				//Cria um elemento javascript.
+				var script = document.createElement('script');
+
+				//Sincroniza com o callback.
+				script.src = 'https://viacep.com.br/ws/' + cep
+						+ '/json/?callback=meu_callback';
+
+				//Insere script no documento e carrega o conteúdo.
+				document.body.appendChild(script);
+
+			} //end if.
+			else {
+				//cep é inválido.
+				limpa_formulário_cep();
+				alert("Formato de CEP inválido.");
+			}
+		} //end if.
+		else {
+			//cep sem valor, limpa formulário.
+			limpa_formulário_cep();
+		}
+	}
+	function limpa_formulário_cep() {
+		//Limpa valores do formulário de cep.
+		document.getElementById('rua').value = ("");
+		document.getElementById('bairro').value = ("");
+		document.getElementById('cidade').value = ("");
+		document.getElementById('uf').value = ("");
+	}
+</script>
+</head>
+<body>
+
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<div class="row">
+		<form class="col s12">
+
+			<select id="select" class="browser-default" name="tipo">
+				<option value="" disabled selected>Tipo de Hospital</option>
+				<option th:each="option : ${tipos}" th:value="${option.nome}"
+					th:text="${option.nome}"></option>
+			</select>
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="first_name" type="text" name="nome" class="validate">
+					<label for="first_name">Nome</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="last_name" type="text" name="descricao" class="validate">
+					<label for="last_name">Descrição</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="text" name="cep" class="validate" id="cep" value=""
+						size="10" maxlength="9" onblur="pesquisacep(this.value);">
+					<label for="cep">CEP</label>
+				</div>
+			</div>
+			<div class="input-field col s6">
+				<input name="rua" type="text" id="rua" size="60" class="validate">
+				<label for="rua">Rua</label>
+			</div>
+			<div class="input-field col s6">
+				<input id="numero" type="text" name="numero" class="validate">
+				<label for="numero">Número</label>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="bairro" type="text" name="bairro" class="validate">
+					<label for="bairro">Bairro</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="cidade" type="text" name="cidade" class="validate">
+					<label for="cidade">Cidade</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="uf" type="text" name="estado" class="validate">
+					<label for="uf">Estado</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="tel" type="text" name="telefone" class="validate">
+					<label for="tel">Telefone</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="email" type="text" name="horario" class="validate">
+					<label for="email">Horario</label>
+				</div>
+			</div>
+			<div class="row">
+				<div>
+					<p>Carregue suas fotos</p>
+					<input id="fotos" type="file" name="fotos" class="validate">
+
+				</div>
+			</div>
+			<button class="btn waves-effect waves-light" type="submit"
+				name="action" style="background-color:rgb(45,125,176);">
+				Salvar <i class="material-icons right">send</i>
+			</button>
+		</form>
+	</div>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

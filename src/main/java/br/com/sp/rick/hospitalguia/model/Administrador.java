@@ -32,4 +32,8 @@ public class Administrador {
 	public void setSenha(String senha) {
 		this.senha = HashUtil.hash(senha);
 	}
+	
+	public void setSenhaComHash(String hash) {
+		this.senha = hash;
+	}
 }

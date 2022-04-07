@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.sp.rick.hospitalguia.model.Administrador;
 import br.com.sp.rick.hospitalguia.repository.AdminRepository;
+import br.com.sp.rick.hospitalguia.util.HashUtil;
 import br.senai.sp.hellospringboot.model.Cliente;
 
 @Controller
@@ -49,17 +50,40 @@ public class AdminController {
 			// redireciona para o formulario
 			return "redirect:formAdm";
 		}
+		//variavel para descobrir alteracao ou inseção
+		boolean alteracao = admin.getId() != null ? true : false;
+		
+		//verificar se a senha esta vazia
+		if(admin.getSenha().equals(HashUtil.hash(""))) {
+			if(!alteracao) {
+			// retirar a parte antes do @ no  e-mail
+			String parte = admin.getEmail().substring(0, admin.getEmail().indexOf("@"));
+			//setar a parte na senha do admin
+			admin.setSenha(parte);
+			}else {
+				// buscar a senha atual no DB
+				String hash = repository.findById(admin.getId()).get().getSenha();
+				//setar o hash na senha
+				admin.setSenhaComHash(hash);
+			}
+		}
+		
 		try {
 			// salva no banco de dados a entidade(admin)
 			repository.save(admin);
 			// adiciona uma mensagem de sucesso
-			attr.addFlashAttribute("mensagemSucesso", "Administrador cadastrado com sucesso. ID:" + admin.getId());
+			if(!alteracao) {
+				attr.addFlashAttribute("mensagemSucesso", "Administrador cadastrado com sucesso. ID:" + admin.getId());
+			}else {
+				attr.addFlashAttribute("mensagemSucesso", "Administrador alterado com sucesso. ID:" + admin.getId());
+			}
 		} catch (DataIntegrityViolationException e) {
+			//capitura o  erro de dublicidade de email e exibe a mensagem
 			System.out.println(e.getMostSpecificCause());
 			attr.addFlashAttribute("mensagemErro", "E-mail existente");
 
 		} catch (Exception e) {
-
+			//capitura um erro generico e exibe a mensagem
 			attr.addFlashAttribute("mensagemErro", "Houve um erro ao salvar " + e.getMessage());
 		}
 
@@ -72,7 +96,7 @@ public class AdminController {
 	public String listaAdmin(Model model, @PathVariable("page") int page) {// @PathVariable("page") capitura o valor q
 																			// esta sendo passado na request
 		// cria um pageable informando os parametros da pagina
-		PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by(Sort.Direction.ASC, "nome"));
+		PageRequest pageable = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.ASC, "id"));
 		// cria um page de adm atraves dos parametros passados ao repository
 		Page<Administrador> pagina = repository.findAll(pageable);
 		// adiciona à model, alista com os adms
