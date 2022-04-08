@@ -33,5 +33,4 @@ public class Hospital {
 	private String especialidade;
 	@Column(columnDefinition = "TEXT")
 	private String fotos;
-	
 }

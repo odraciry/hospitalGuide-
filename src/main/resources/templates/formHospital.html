@@ -74,14 +74,17 @@
 <body>
 
 	<header th:replace="fragments/padrao :: cabecalho"></header>
+	
+	<h2 style="text-align:center;">Cadastro de Hospital</h2>
 	<div class="row">
-		<form class="col s12">
+		<form class="col s12" action="salvarHosp" method="post" enctype="multipart/form-data">
 
-			<select id="select" class="browser-default" name="tipo">
+			<select id="select" class="browser-default" name="tipo.id">
 				<option value="" disabled selected>Tipo de Hospital</option>
-				<option th:each="option : ${tipos}" th:value="${option.nome}"
+				<option th:each="option : ${tipos}" th:value="${option.id}"
 					th:text="${option.nome}"></option>
 			</select>
+			<div th:replace="fragments/mensagem"></div>
 			<div class="row">
 				<div class="input-field col s6">
 					<input id="first_name" type="text" name="nome" class="validate">
@@ -92,7 +95,15 @@
 					<label for="last_name">Descrição</label>
 				</div>
 			</div>
-
+			<div class="file-field input-field">
+				<div class="btn" style="background-color: rgb(45, 125, 176);">
+					<span>Fotos</span> <input type="file" multiple accept="image/*" name="fileFotos">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text"
+						placeholder="Envie suas imagens">
+				</div>
+			</div>
 			<div class="row">
 				<div class="input-field col s12">
 					<input type="text" name="cep" class="validate" id="cep" value=""
@@ -124,9 +135,13 @@
 			</div>
 
 			<div class="row">
-				<div class="input-field col s12">
+				<div class="input-field col s6">
 					<input id="tel" type="text" name="telefone" class="validate">
 					<label for="tel">Telefone</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="tel" type="text" name="site" class="validate">
+					<label for="tel">Site</label>
 				</div>
 			</div>
 			<div class="row">
@@ -135,22 +150,16 @@
 					<label for="email">Horario</label>
 				</div>
 			</div>
-			<div class="row">
-				<div>
-					<p>Carregue suas fotos</p>
-					<input id="fotos" type="file" name="fotos" class="validate">
-
-				</div>
-			</div>
+			
 			<button class="btn waves-effect waves-light" type="submit"
-				name="action" style="background-color:rgb(45,125,176);">
+				name="action" style="background-color: rgb(45, 125, 176);">
 				Salvar <i class="material-icons right">send</i>
 			</button>
 		</form>
 	</div>
+	
 	<!-- Compiled and minified JavaScript -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </body>
 </html>
