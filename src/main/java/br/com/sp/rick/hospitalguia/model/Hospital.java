@@ -33,4 +33,9 @@ public class Hospital {
 	private String especialidade;
 	@Column(columnDefinition = "TEXT")
 	private String fotos;
+	
+	// retorna as fotos na forma vetor de string
+	public String[] verFotos() {
+		return fotos.split(";");
+	}
 }

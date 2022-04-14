@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="listaAdm.css">
+<link rel="stylesheet" href="padrao.css">
+</head>
+<body>
+	<table>
+		<thead>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>Telefone</th>
+			<th>Site</th>
+			<th>Estado</th>
+			<th>Tipo</th>
+			<th>Alterar</th>
+			<th>Excluir</th>
+		</thead>
+		<tbody>
+			<tr th:each="hosp:${hospital}">
+				<td th:text="${hosp.id}"></td>
+				<td th:text="${hosp.nome}"></td>
+				<td th:text="${hosp.telefone}"></td>
+				<td th:text="${hosp.site}"></td>
+				<td th:text="${hosp.estado}"></td>
+				<td th:text="${hosp.tipo?.nome}"></td>
+				<td><a th:href="@{/alterarHosp(id=${hosp.id})}">Alterar</a></td>
+				<td><a
+					th:attr="onclick=|return confirm('Deseja excluir o ID: ${hosp.id}')|"
+					th:href="@{/excluirHosp(id=${hosp.id})}">Excluir</a></td>
+			</tr>
+		</tbody>
+
+	</table>
+	<nav aria-label="Page navigation example" id="paginas"
+		style="background-color: rgba(45, 126, 176, 0.808); bottom: 0; position: fixed; display: flex; justify-content: center;">
+		<ul class="pagination">
+			<li class="page-item"
+				th:class="${pagAtual == 1 ? 'disabled' : 'page-link'}"><a
+				class="page-link" th:href="${pagAtual > 1 ? pagAtual - 1 : '#'}"
+				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
+					class="sr-only">Anterior</span>
+			</a></li>
+
+			<li th:each="p:${numPaginas}"
+				th:class="${pagAtual == p ? 'active red' : 'page-link'}"><a
+				th:href="${p}"><span th:text="${p}"></span></a></li>
+
+			<li class="page-item"
+				th:class="${pagAtual == totalPages ? 'disabled' : 'page-link'}">
+				<a class="page-link"
+				th:href="${pagAtual < totalPages ? pagAtual + 1 : '#'}"
+				aria-label="Next"> <span class="sr-only">Proximo</span> <span
+					aria-hidden="true">&raquo;</span>
+			</a>
+			</li>
+		</ul>
+	</nav>
+</body>
+</html>

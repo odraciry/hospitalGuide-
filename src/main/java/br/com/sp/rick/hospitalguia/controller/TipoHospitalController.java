@@ -84,14 +84,14 @@ public class TipoHospitalController {
 		return "listaTipoHospital";
 	}
 
-	@RequestMapping("alterarHosp")
+	@RequestMapping("alterarTipoHosp")
 	public String alterar(Long id, Model model) {
 		TipoHospital hosp = repository.findById(id).get();
 		model.addAttribute("hosp", hosp);
 		return "forward:formHospital";
 	}
 
-	@RequestMapping("excluirHosp")
+	@RequestMapping("excluirTipoHosp")
 	public String excluir(Long id) {
 		repository.deleteById(id);
 		return "redirect:listaTipoHosp/1";

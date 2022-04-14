@@ -7,3 +7,13 @@
 .row{
 	padding:10px;
 }
+#fotos img, li{
+	width: 100px;
+	display: block;
+	margin: 5px;
+}
+#fotos{
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
