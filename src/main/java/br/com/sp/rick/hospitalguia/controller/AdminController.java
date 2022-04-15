@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.metamodel.Bindable;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.sp.rick.hospitalguia.model.Administrador;
 import br.com.sp.rick.hospitalguia.repository.AdminRepository;
 import br.com.sp.rick.hospitalguia.util.HashUtil;
-import br.senai.sp.hellospringboot.model.Cliente;
+
 
 @Controller
 public class AdminController {
@@ -38,6 +39,11 @@ public class AdminController {
 	@RequestMapping("formAdm")
 	public String adm() {
 		return "formAdm";
+	}
+	
+	@RequestMapping("index")
+	public String index() {
+		return "index";
 	}
 
 	// request mapping para salvar o adm, do tipo POST
@@ -129,5 +135,20 @@ public class AdminController {
 	public String excluir(Long id){
 		repository.deleteById(id);
 		return "redirect:listaAdm/1";
+	}
+	
+	@RequestMapping("login")
+	public String login(Administrador admLogin, RedirectAttributes attr, HttpSession session) {
+		//busca o adm nobanco
+		Administrador adm = repository.findByEmailAndSenha(admLogin.getEmail(), admLogin.getSenha());
+		//verifica se existe
+		if(adm == null) {
+			attr.addFlashAttribute("mensagemErro", "Login e/ou senha inválido(s)");
+			return "redirect:/";
+		}else {
+			//salva o adm na sessão
+			session.setAttribute("usuarioLogado", adm);
+			return "redirect:/listaHosp/1";
+		}
 	}
 }

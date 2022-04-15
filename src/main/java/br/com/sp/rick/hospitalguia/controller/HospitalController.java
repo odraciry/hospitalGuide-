@@ -43,7 +43,7 @@ public class HospitalController {
 	public String salvar(Hospital hospital, RedirectAttributes attr,
 			@RequestParam("fileFotos") MultipartFile[] fileFotos) {
 		// string pra armazenar as URls
-		String fotos = "";
+		String fotos = hospital.getFotos();
 		// percorre cada arquivo no vetor
 		for (MultipartFile arquivo : fileFotos) {
 			// verifica se o arquivo existe
@@ -118,7 +118,14 @@ public class HospitalController {
 	
 	@RequestMapping("excluirHosp")
 	public String excluir(Long id){
-		repository.deleteById(id);
+		Hospital hosp = repository.findById(id).get();
+		if(hosp.getFotos().length() > 0) {
+			for(String foto : hosp.verFotos()) {
+				fireUtil.deletar(foto);
+			}
+			
+		}
+		repository.delete(hosp);
 		return "redirect:listaHosp/1";
 	}
 	

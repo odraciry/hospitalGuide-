@@ -84,7 +84,8 @@
 				id="select" class="browser-default" name="tipo.id">
 				<option value="" disabled selected>Tipo de Hospital</option>
 				<option th:each="option : ${tipos}" th:value="${option.id}"
-					th:text="${option.nome}" th:selected="(${hosp?.tipo?.id} == *{option?.id})"></option>
+					th:text="${option.nome}"
+					th:selected="(${hosp?.tipo?.id} == *{option?.id})"></option>
 			</select>
 			<div th:replace="fragments/mensagem"></div>
 			<div class="row">
@@ -159,11 +160,17 @@
 				<h6>Fotos cadastradas</h6>
 				<div>
 					<ul id="fotos">
-						<li th:each="foto : ${hosp?.verFotos()}"><a th:href="${foto}"
-							target="blak"><img th:src="${foto}"></a></li>
+						<li th:each="foto, i : ${hosp?.verFotos()}"><a
+							th:href="${foto}" target="blak"><img th:src="${foto}"></a>
+							<a  th:href="@{/excluirFotos(idHosp=${hosp?.id}, numFoto=${i.index})}">
+								<i class="material-icons">delete</i></a>
+						</li>
+
+
 					</ul>
 				</div>
 			</div>
+			<input type="hidden" th:value="${hosp?.fotos}" name="fotos">
 			<button class="btn waves-effect waves-light" type="submit"
 				name="action" style="background-color: rgb(45, 125, 176);">
 				Salvar <i class="material-icons right">send</i>

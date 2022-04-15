@@ -34,15 +34,27 @@ h2{
     border: none;
     margin-right: 3%;
 }
+#cad{
+    text-decoration: none;
+    display:block;
+    text-align:right;
+    color: black;
+    font-size: 1.2rem;
+    font-family: monospace;
+}
+#cad:hover{
+    color:rgb(0, 118, 0);
+}
 button{
     width: 100px;
     height: 2em;
     background: rgba(255, 255, 255, 0.507);
     margin-top: 10px;
-    border: 1px solid black;
+    border:none
 }
 button:hover{
     background: rgba(255, 255, 255, 0.027);
+    border: 1px solid black;
 }
 button:focus{
     background: rgba(255, 255, 255, 0.507);

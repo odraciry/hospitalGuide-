@@ -3,6 +3,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="formAdm.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="padrao.css">
 </head>
 <body>
 	<form class="box">
@@ -10,14 +13,15 @@
             <div class="login">
                 <label for="">Usuario:</label>
                 <i class="material-icons">assignment_ind</i>
-                <input type="text" name="login" placeholder="Digite...">
+                <input type="text" name="email" placeholder="Digite...">
             </div>
             <div class="login">
                 <label for="">Senha:</label>
                 <i class="material-icons">https</i>
                 <input type="password" name="senha" placeholder="Digite...">
             </div>
-            <a href="." id="cadastrar">Cadastrar</a>
+            <a href="." id="cad">Cadastrar</a>
+            <div th:replace="fragments/mensagem"></div>
             <button type="submit">Entrar</button>
       </form>
 </body>
