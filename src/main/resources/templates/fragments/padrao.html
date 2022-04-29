@@ -6,26 +6,26 @@
 </head>
 <body>
 	<header th:fragment="cabecalho">
-        <div class="logo">USP</div>
-        <div class="nav">
-            <div>
-                <select id="cadastrar" onchange="location.href=this.value">
-                    <option select>Cadastrar</option>
-                    <option value="formHospital">Hospital</option>
-                    <option value="formTipoHospital">Tipo de Hospital</option>
-                    <option value="formAdm">Administrador</option>
-                </select>
-            </div>
-            <div>
-                <a href="listaHosp/1" target="blank">Hospitais</a> 
-            </div>
-            <div>
-                <a href=".">Baby</a> 
-            </div>
-            <div>
-                <a href="login.html" target="blank">Login</a>
-            </div>
-        </div>
-    </header>
+			<div class="logo">USP</div>
+			<div class="nav" th:if="${session.usuarioLogado != null}">
+				<div>
+					<select id="cadastrar" onchange="location.href=this.value">
+						<option select>Cadastrar</option>
+						<option value="formHospital">Hospital</option>
+						<option value="formTipoHospital">Tipo de Hospital</option>
+						<option value="formAdm">Administrador</option>
+					</select>
+				</div>
+				<div>
+					<a href="listaHosp/1" target="blank">Hospitais</a>
+				</div>
+				<div>
+					<a href=".">Baby</a>
+				</div>
+				<div>
+					<a href="login.html" target="blank">Login</a>
+				</div>
+			</div>
+	</header>
 </body>
 </html>

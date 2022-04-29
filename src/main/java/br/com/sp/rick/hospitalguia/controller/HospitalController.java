@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.sp.rick.hospitalguia.annotation.Publico;
 import br.com.sp.rick.hospitalguia.model.Administrador;
 import br.com.sp.rick.hospitalguia.model.Hospital;
 import br.com.sp.rick.hospitalguia.repository.HospitalRepository;
@@ -33,12 +34,14 @@ public class HospitalController {
 	@Autowired
 	private FirebaseUtil fireUtil;
 
+	@Publico
 	@RequestMapping("formHospital")
 	public String form(Model model) {
 		model.addAttribute("tipos", repTipo.findAllByOrderByNomeAsc());
 		return "formHospital";
 	}
 
+	@Publico
 	@RequestMapping("salvarHosp")
 	public String salvar(Hospital hospital, RedirectAttributes attr,
 			@RequestParam("fileFotos") MultipartFile[] fileFotos) {
@@ -81,6 +84,7 @@ public class HospitalController {
 		return "redirect:formHospital";
 	}
 
+	@Publico
 	// request mapping para listar hospitais
 	@RequestMapping("listaHosp/{page}")
 	public String listaHosp(Model model, @PathVariable("page") int page) {// @PathVariable("page") capitura o valor q
@@ -109,6 +113,7 @@ public class HospitalController {
 		return "listaHospital";
 	}
 	
+	@Publico
 	@RequestMapping("alterarHosp")
 	public String alterar(Long id,Model model) {
 		Hospital hosp = repository.findById(id).get();
@@ -116,6 +121,7 @@ public class HospitalController {
 		return "forward:formHospital";
 	}
 	
+	@Publico
 	@RequestMapping("excluirHosp")
 	public String excluir(Long id){
 		Hospital hosp = repository.findById(id).get();
@@ -129,6 +135,7 @@ public class HospitalController {
 		return "redirect:listaHosp/1";
 	}
 	
+	@Publico
 	@RequestMapping("excluirFotos")
 	public String excluirFotos(Long idHosp, int numFoto, Model model) {
 		//busca o hospital 

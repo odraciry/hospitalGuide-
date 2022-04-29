@@ -1,0 +1,52 @@
+package br.com.sp.rick.hospitalguia.interceptor;
+
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import br.com.sp.rick.hospitalguia.annotation.Publico;
+
+@Component
+public class AppInterceptor implements HandlerInterceptor {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		// variavel para obter a URI da request
+		String uri = request.getRequestURI();
+		// variavel pra sessao
+		HttpSession session = request.getSession();
+
+		if (uri.startsWith("/error")) {
+			return true;
+		}
+
+		// verificar se handler é um HandlerMethod, oq indica q ele está chamando um
+		// metodo em algum controller
+		if (handler instanceof HandlerMethod) {
+			// casting de Object para HandlerMethod
+			HandlerMethod metodo = (HandlerMethod) handler;
+			if (uri.startsWith("/api")) {
+		
+				return true;
+			} else {
+				// verifica se o metodo é publico
+				if (metodo.getMethodAnnotation(Publico.class) != null) {
+					return true;
+				}
+				// verifica se existe um usuario logado
+				if (session.getAttribute("usuarioLogado") != null) {
+					return true;
+				}
+				// redireciona para a pagina inical
+				response.sendRedirect("/");
+				return false;
+			}
+		}
+		return true;
+	}
+}

@@ -10,6 +10,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link rel="stylesheet" href="padrao.css">
 <link rel="stylesheet" href="hospital.css">
+
 <script type="text/javascript">
 	function meu_callback(conteudo) {
 		if (!("erro" in conteudo)) {
@@ -162,9 +163,10 @@
 					<ul id="fotos">
 						<li th:each="foto, i : ${hosp?.verFotos()}"><a
 							th:href="${foto}" target="blak"><img th:src="${foto}"></a>
-							<a  th:href="@{/excluirFotos(idHosp=${hosp?.id}, numFoto=${i.index})}">
-								<i class="material-icons">delete</i></a>
-						</li>
+							<a
+							th:href="@{/excluirFotos(idHosp=${hosp?.id}, numFoto=${i.index})}">
+								<i class="material-icons">delete</i>
+						</a></li>
 
 
 					</ul>
@@ -177,10 +179,15 @@
 			</button>
 		</form>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 	<!-- Compiled and minified JavaScript -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+	<script>
+		$(document).ready(function() {
+			$('select').formSelect();
+		});
+	</script>
 </body>
 </html>

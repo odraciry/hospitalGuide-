@@ -7,12 +7,13 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-<link rel="stylesheet" href="listaAdm.css">
-<link rel="stylesheet" href="padrao.css">
+<link rel="stylesheet" href="/listaAdm.css">
+<link rel="stylesheet" href="/padrao.css">
 <link rel="stylesheet" href="/listaTipoHospital.css">
 </head>
 <body>
-	<div >
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<div>
 		<nav style="background-color: rgba(45, 126, 176, 0.808);">
 			<div class="nav-wrapper">
 				<form action="/buscarPor" id="pesquisa">

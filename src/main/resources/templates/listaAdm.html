@@ -5,10 +5,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="padrao.css">
 <link rel="stylesheet" href="listaAdm.css">
-<link rel="stylesheet" href="padrao.css">
+
 </head>
 <body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
 	<table>
 		<thead>
 			<th>ID</th>
@@ -23,7 +25,9 @@
 				<td th:text="${adm.nome}"></td>
 				<td th:text="${adm.email}"></td>
 				<td><a th:href="@{/alterarAdm(id=${adm.id})}">Alterar</a></td>
-				<td><a th:attr="onclick=|return confirm('Deseja excluir o ID: ${adm.id}')|" th:href="@{/excluirAdm(id=${adm.id})}">Excluir</a></td>
+				<td><a
+					th:attr="onclick=|return confirm('Deseja excluir o ID: ${adm.id}')|"
+					th:href="@{/excluirAdm(id=${adm.id})}">Excluir</a></td>
 			</tr>
 		</tbody>
 
@@ -32,17 +36,17 @@
 		style="background-color: rgba(45, 126, 176, 0.808); bottom: 0; position: fixed; display: flex; justify-content: center;">
 		<ul class="pagination">
 			<li class="page-item"
-				th:class="${pagAtual == 1 ? 'disabled' : 'page-link'}"><a 
+				th:class="${pagAtual == 1 ? 'disabled' : 'page-link'}"><a
 				class="page-link" th:href="${pagAtual > 1 ? pagAtual - 1 : '#'}"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Anterior</span>
 			</a></li>
 
-			<li th:each="p:${numPaginas}" 
+			<li th:each="p:${numPaginas}"
 				th:class="${pagAtual == p ? 'active red' : 'page-link'}"><a
 				th:href="${p}"><span th:text="${p}"></span></a></li>
 
-			<li class="page-item" 
+			<li class="page-item"
 				th:class="${pagAtual == totalPages ? 'disabled' : 'page-link'}">
 				<a class="page-link"
 				th:href="${pagAtual < totalPages ? pagAtual + 1 : '#'}"
