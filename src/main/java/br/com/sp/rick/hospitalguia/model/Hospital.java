@@ -1,11 +1,14 @@
 package br.com.sp.rick.hospitalguia.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -33,6 +36,8 @@ public class Hospital {
 	private String especialidade;
 	@Column(columnDefinition = "TEXT")
 	private String fotos;
+	@OneToMany(mappedBy = "hospital")
+	private List<Avaliacao> avaliacoes;
 	
 	// retorna as fotos na forma vetor de string
 	public String[] verFotos() {

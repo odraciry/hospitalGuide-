@@ -1,6 +1,9 @@
 package br.com.sp.rick.hospitalguia.rest;
 
 import java.net.URI;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+
 import br.com.sp.rick.hospitalguia.annotation.Publico;
 import br.com.sp.rick.hospitalguia.model.Erro;
 import br.com.sp.rick.hospitalguia.model.Hospital;
+import br.com.sp.rick.hospitalguia.model.TokenJWT;
 import br.com.sp.rick.hospitalguia.model.Usuario;
 import br.com.sp.rick.hospitalguia.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioRestController {
+	
+	public static final String EMISSOR = "SENAI";
+	public static final String SECRET = "@551N@TUr@";
+	
 	@Autowired
 	private UsuarioRepository repository;
 
@@ -72,5 +83,30 @@ public class UsuarioRestController {
 	public ResponseEntity<Void> excluirUsuario(@PathVariable("id") Long idUsuario){
 		repository.deleteById(idUsuario);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@Publico
+	@RequestMapping(value = "/login", method = RequestMethod.POST , consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TokenJWT> logar(@RequestBody Usuario usuario){
+		usuario = repository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
+		//verifica se o usuario é nulo
+		if(usuario != null) {
+			//variavel para inserir dados no payload
+			Map<String, Object> payload = new HashMap<String, Object>();
+			payload.put("id user", usuario.getId());
+			payload.put("name", usuario.getId());
+			//variavel para data expiração
+			Calendar expiracao = Calendar.getInstance();
+			//adiciona
+			expiracao.add(Calendar.HOUR, 1);
+			//algoritmo para assinar o token
+			Algorithm algoritmo = Algorithm.HMAC256(SECRET);
+			//cria  token
+			TokenJWT tokenJwt = new TokenJWT();
+			//cria o objeto para receber o token
+			tokenJwt.setToken(JWT.create().withPayload(payload).withIssuer(EMISSOR).withExpiresAt(expiracao.getTime()).sign(algoritmo));
+			return ResponseEntity.ok(tokenJwt);
+		}else {
+			return new ResponseEntity<TokenJWT>(HttpStatus.UNAUTHORIZED);		}
 	}
 }
