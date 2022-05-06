@@ -65,7 +65,8 @@ public class AppInterceptor implements HandlerInterceptor {
 						}else {
 							response.sendError(HttpStatus.FORBIDDEN.value(), e.getMessage());
 						}
-						return false;
+						return false
+								;
 					}
 				}
 				return true;
